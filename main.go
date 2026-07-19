@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-type featuresStruct struct {
+type FeaturesStruct struct {
 	Color   [3]string
 	weight  int
 	height  int
@@ -34,7 +34,7 @@ func main() {
 		"opacity": "0.99",
 	}
 
-	featuresStruct := featuresStruct{
+	featuresStruct := FeaturesStruct{
 		Color:   [3]string{"Red", "Green", "Blue"},
 		weight:  100,
 		height:  200,
@@ -43,11 +43,32 @@ func main() {
 	}
 
 	fmt.Println(featuresMap)
-	fmt.Println(featuresStruct)
+	fmt.Printf("Features Struct: %+v\n", featuresStruct)
 
 	// fmt.Println("Category:")
 	// fmt.Println(category)
 	// fmt.Println("Products:")
 	// fmt.Println(products)
 	// fmt.Println(u.GetData())
+
+	// map and struct
+
+	market := map[string]FeaturesStruct{
+		"Apple": {
+			Color:   [3]string{"Red", "Green", "Blue"},
+			weight:  100,
+			height:  200,
+			opacity: 0.99,
+			status:  true,
+		},
+		"Banana": {
+			Color:   [3]string{"Yellow", "Green", "Brown"},
+			weight:  150,
+			height:  250,
+			opacity: 0.95,
+			status:  true,
+		},
+	}
+
+	fmt.Printf("Market: %+v\n", market)
 }
