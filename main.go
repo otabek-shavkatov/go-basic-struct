@@ -139,3 +139,6 @@ func (c *Circle) Scale(factor float64) error {
 
 	return nil
 }
+
+
+//task 3
