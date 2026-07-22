@@ -192,3 +192,5 @@ func (r *Rectangle) Scale(factor float64) error {
 
 	return nil
 }
+
+// part 2 started No 4
