@@ -51,6 +51,16 @@ func main() {
 		return
 	}
 
+	// nuqtalarni beramiz corduinatlarini va ular orqali nuqtalar topiladi va orasidagi masofalar topilib qoshilib perimetr hisoblanadi
+	triangle := Triangle{
+		a: NewPoint(0, 0),
+		b: NewPoint(3, 0),
+		c: NewPoint(0, 4),
+	}
+
+	fmt.Println("Perimeter:", triangle.Perimeter())
+	fmt.Println("Is valid:", triangle.IsValid())
+
 }
 
 // Pointni qaytaradi structe yaratilganidan keyin unga mos obyekt yaratilishi kerak qiymatlarni qnadya qaytarish kerakligini belgilshga ishaltish uchun struct ni
@@ -217,3 +227,45 @@ type ColoredRectangle struct {
 func (c Color) ColorHex() string {
 	return fmt.Sprintf("#%02X%02X%02X", c.r, c.g, c.b)
 }
+
+// Point orqali nuqtalarni topib olamiz
+
+// part 2 No 5
+type Triangle struct {
+	a Point
+	b Point
+	c Point
+}
+
+// a dan b gacha b dan c gacha va a dan c gacha masofalar topilib perimetrlari hisoblandi
+func (t Triangle) Perimeter() float64 {
+	ab := t.a.DistanceTo(t.b)
+	bc := t.b.DistanceTo(t.c)
+	ac := t.a.DistanceTo(t.c)
+
+	return ab + bc + ac
+}
+
+// bir burchakga yopshgan ikk tomon yigindisi burchak qarshisidagi tomondan katta bolsa shart qanoatlantiriladi
+func (t Triangle) IsValid() bool {
+	ab := t.a.DistanceTo(t.b)
+	bc := t.b.DistanceTo(t.c)
+	ac := t.a.DistanceTo(t.c)
+
+	return ab+bc > ac &&
+		ab+ac > bc &&
+		ac+bc > ab
+}
+
+// buyterda Move bolayotgani uchun mos kordinatalari qoshiladi va asl qiymatni ozgarititishimzi mumkin bolishini taminlash uchun * ishlatamiz
+func (c *Circle) Move(dx, dy float64) {
+	c.center.x += dx
+	c.center.y += dy
+}
+
+// istalgan qiymatni shunchaki bu qyataradi yani qiymat ozgarmaydi bunday xolatsda if orqali tekshirsak boladi ...
+func (c Circle) Describe() string {
+	return fmt.Sprintf("Radius: %.2f", c.radius)
+}
+
+// part 3 No 7
