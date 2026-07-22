@@ -11,6 +11,18 @@ type Point struct {
 	y float64
 }
 
+// interface ning vazifasi u oz ichiga methiodlarni olib turadi maslaan boshqa go fileda shaope ichiga olgan func larni shapoe orqali chaqirib ishlata olamiz
+// yani shapega ichidagi methodlar shape.Area() qilib ishaltsa boaldi shunday
+type Shape interface {
+	Area() float64
+	Perimeter() float64
+	// String() string chunki memnda string ishlatilmagan
+}
+
+type Drawable interface {
+	Draw() string
+}
+
 func main() {
 
 	firstPoint := NewPoint(0, 0)
@@ -71,6 +83,16 @@ func NewPoint(x, y float64) Point {
 
 func (p Point) X() float64 {
 	return p.x
+}
+
+// bu Drawable interface ga tegishli chunki unga draw methiod belguilangan chunki drw method bor
+func (c Circle) Draw() string {
+	return "   ***\n *   *\n   ***"
+}
+
+// Drawable interface
+func (r Rectangle) Draw() string {
+	return "*****\n*   *\n*****"
 }
 
 func (p Point) Y() float64 {
@@ -268,4 +290,10 @@ func (c Circle) Describe() string {
 	return fmt.Sprintf("Radius: %.2f", c.radius)
 }
 
-// part 3 No 7
+// buyerda bunday biolyapti shapes aytyaopti men faqat draw ni chaqira olaman deyapti Drawable ichida Draw bor
+// Draw esa Circle va Rectangle larda bor
+func Render(shapes []Drawable) {
+	for _, shape := range shapes {
+		fmt.Println(shape.Draw())
+	}
+}
