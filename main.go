@@ -194,3 +194,26 @@ func (r *Rectangle) Scale(factor float64) error {
 }
 
 // part 2 started No 4
+
+type Color struct {
+	r uint8
+	b uint8
+	g uint8
+}
+
+// aylana bor edi uning rangli varaintini qyatirsh uchun
+type ColoredCircle struct {
+	Circle
+	color Color
+}
+
+type ColoredRectangle struct {
+	Rectangle
+	color Color
+}
+
+// rgb qaytaradi
+
+func (c Color) ColorHex() string {
+	return fmt.Sprintf("#%02X%02X%02X", c.r, c.g, c.b)
+}
