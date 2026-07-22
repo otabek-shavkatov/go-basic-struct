@@ -140,5 +140,55 @@ func (c *Circle) Scale(factor float64) error {
 	return nil
 }
 
-
 //task 3
+
+type Rectangle struct {
+	topLeft Point
+	height  float64
+	width   float64
+}
+
+func ConstructrRectangle(topLeft Point, width, height float64) (Rectangle, error) {
+	if width <= 0 || height <= 0 {
+		return Rectangle{}, errors.New("width and height ")
+	}
+
+	return Rectangle{
+		topLeft: topLeft,
+		width:   width,
+		height:  height,
+	}, nil
+}
+
+// tortburchakning yuzasini hisoblash
+func (r Rectangle) Area() float64 {
+	return r.height * r.width
+}
+
+// tortburchakning perimetrini hisoblash
+func (r Rectangle) Perimeter() float64 {
+	return r.height*2 + r.width*2
+}
+
+func (r Rectangle) Contains(p Point) bool {
+	return p.x >= r.topLeft.x &&
+		p.x <= r.topLeft.x+r.width &&
+		p.y >= r.topLeft.y &&
+		p.y <= r.topLeft.y+r.height
+}
+
+func (r Rectangle) Diagonal() float64 {
+	return math.Sqrt(r.width*r.width + r.height*r.height)
+}
+
+func (r *Rectangle) Scale(factor float64) error {
+
+	if factor <= 0 {
+		return errors.New("ffaktor 0 danm katta bolishgi kerak oke")
+	}
+
+	r.width *= factor
+	r.height *= factor
+
+	return nil
+}
