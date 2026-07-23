@@ -127,6 +127,12 @@ func main() {
 
 	fmt.Println(LargestShape(shapes))
 
+	Describe(circle)
+
+	Describe(rect)
+
+	Describe(triangle)
+
 }
 
 // Pointni qaytaradi structe yaratilganidan keyin unga mos obyekt yaratilishi kerak qiymatlarni qnadya qaytarish kerakligini belgilshga ishaltish uchun struct ni
@@ -408,4 +414,19 @@ func LargestShape(shapes []Shape) Shape {
 	}
 
 	return largest
+}
+
+// / Describe qaysi biri qnadya struct ekanligni aniqlaymiz yani shape ichida nimalr bior ozi oshalarni bilish uchun switch dan foydalanamiz
+func Describe(shape Shape) {
+	switch s := shape.(type) {
+	case Circle:
+		fmt.Println("Circle radiusi", s.Radius())
+
+	case Triangle:
+		fmt.Println("uchburchakning turi", s.Type())
+
+	case Rectangle:
+		fmt.Println("tortburchakning eni", s.width)
+
+	}
 }
