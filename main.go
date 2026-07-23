@@ -65,89 +65,77 @@ type ColoredRectangle struct {
 
 func main() {
 
+	fmt.Println("========== Geometry Studio ==========")
+	fmt.Println()
+
+	// ==========================
+	// PART 1 - POINT
+	// ==========================
+
 	firstPoint := NewPoint(0, 0)
 	secondPoint := NewPoint(3, 4)
 
-	// Distanceto bu method Pointga tegishli shuning uchun firstPoin. qilib ishalta olamiz
-	distance := firstPoint.DistanceTo(secondPoint)
-	fmt.Println("Distance:", distance)
+	fmt.Println("Distance:", firstPoint.DistanceTo(secondPoint))
+	fmt.Println()
 
-	// task number 2
+	// ==========================
+	// PART 2 - CIRCLE
+	// ==========================
 
-	// Point yaratamiz
-	p1 := NewPoint(0, 0)
-	p2 := NewPoint(3, 4)
+	circle := CircleNew(NewPoint(0, 0), 5)
 
-	circle := CircleNew(p1, 1)
-
-	// Markazi()
-	fmt.Println("Markazi:", circle.Center())
-
-	// Radius()
+	fmt.Println("Circle")
+	fmt.Println("Center:", circle.Center())
 	fmt.Println("Radius:", circle.Radius())
-
-	// Yuzasi()
-	fmt.Println("Yuzasi:", circle.Area())
-
-	// Perimeter()
+	fmt.Println("Area:", circle.Area())
 	fmt.Println("Perimeter:", circle.Perimeter())
+	fmt.Println("Contains (3,4):", circle.Contains(NewPoint(3, 4)))
 
-	// qayerdaligini aniqlash()
-	fmt.Println("P2 aylana ichidami:", circle.Contains(p2))
-
-	// marta oshirish()
 	err := circle.Scale(2)
-	// scalega berib koramiz yani factor sonni agar nil qaytsa yani ifdan otib unday bolsa uni nil emasga tenglaymiz nilga nil teng emas true bolsa error qaytaramiz yani errorni
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	// nuqtalarni beramiz corduinatlarini va ular orqali nuqtalar topiladi va orasidagi masofalar topilib qoshilib perimetr hisoblanadi
+	fmt.Println("Scaled Radius:", circle.Radius())
+	fmt.Println()
+
+	// ==========================
+	// PART 3 - RECTANGLE
+	// ==========================
+
+	rect, _ := ConstructrRectangle(
+		NewPoint(0, 0),
+		4,
+		6,
+	)
+
+	fmt.Println("Rectangle")
+	fmt.Println("Area:", rect.Area())
+	fmt.Println("Perimeter:", rect.Perimeter())
+	fmt.Println("Diagonal:", rect.Diagonal())
+	fmt.Println()
+
+	// ==========================
+	// PART 4 - TRIANGLE
+	// ==========================
+
 	triangle := Triangle{
 		a: NewPoint(0, 0),
 		b: NewPoint(3, 0),
 		c: NewPoint(0, 4),
 	}
 
-	fmt.Println("Uchburchak yuzasi", triangle.Area())
-	fmt.Println("Uchburchak turlari:", triangle.Type())
+	fmt.Println("Triangle")
+	fmt.Println("Area:", triangle.Area())
 	fmt.Println("Perimeter:", triangle.Perimeter())
-	fmt.Println("Is valid:", triangle.IsValid())
+	fmt.Println("Valid:", triangle.IsValid())
+	fmt.Println("Type:", triangle.Type())
+	fmt.Println()
 
-	rect, _ := ConstructrRectangle(NewPoint(0, 0), 4, 6)
-
-	shapes := []Shape{
-		circle,
-		rect,
-		triangle,
-	}
-	// barcha shapega tegishlilarni arealarni umumiysi
-	fmt.Println(TotalArea(shapes))
-
-	fmt.Println(LargestShape(shapes))
-
-	Describe(circle)
-
-	Describe(rect)
-
-	Describe(triangle)
-
-	sorted := SortByArea(shapes)
-
-	// yigilgan arrayni forda bittalab ayalntirib korsatamiz
-	for _, s := range sorted {
-		fmt.Println("s", s.Area())
-	}
-
-	points := []Point{
-		NewPoint(1, 1),
-		NewPoint(4, 4),
-		NewPoint(8, 8),
-	}
-	CirclePrint := FitInside(circle, points)
-
-	fmt.Println(CirclePrint)
+	// ==========================
+	// PART 5 - EMBEDDING
+	// ==========================
 
 	colored := ColoredCircle{
 		Circle: circle,
@@ -158,10 +146,86 @@ func main() {
 		},
 	}
 
-	fmt.Println(colored.color.ColorHex())
-	fmt.Println(colored.Area())
-	fmt.Println(colored.Perimeter())
+	fmt.Println("Colored Circle")
+	fmt.Println("Color:", colored.color.ColorHex())
+	fmt.Println("Area:", colored.Area())
+	fmt.Println("Perimeter:", colored.Perimeter())
+	fmt.Println()
 
+	// ==========================
+	// PART 6 - INTERFACE
+	// ==========================
+
+	shapes := []Shape{
+		circle,
+		rect,
+		triangle,
+	}
+
+	fmt.Println("Total Area")
+	fmt.Println(TotalArea(shapes))
+	fmt.Println()
+
+	fmt.Println("Largest Shape")
+	fmt.Println(LargestShape(shapes))
+	fmt.Println()
+
+	// ==========================
+	// PART 7 - TYPE SWITCH
+	// ==========================
+
+	fmt.Println("Describe")
+
+	Describe(circle)
+	Describe(rect)
+	Describe(triangle)
+
+	fmt.Println()
+
+	// ==========================
+	// PART 8 - POLYMORPHISM
+	// ==========================
+
+	points := []Point{
+		NewPoint(1, 1),
+		NewPoint(4, 4),
+		NewPoint(8, 8),
+	}
+
+	fmt.Println("Points inside Circle")
+
+	inside := FitInside(circle, points)
+
+	for _, p := range inside {
+		fmt.Println(p)
+	}
+
+	fmt.Println()
+
+	// ==========================
+	// PART 9 - SORT
+	// ==========================
+
+	fmt.Println("Sort By Area")
+
+	sorted := SortByArea(shapes)
+
+	for _, s := range sorted {
+		fmt.Println(s)
+	}
+
+	fmt.Println()
+
+	// ==========================
+	// PART 10 - DRAW
+	// ==========================
+
+	fmt.Println("Render")
+
+	Render([]Drawable{
+		circle,
+		rect,
+	})
 }
 
 // Pointni qaytaradi structe yaratilganidan keyin unga mos obyekt yaratilishi kerak qiymatlarni qnadya qaytarish kerakligini belgilshga ishaltish uchun struct ni
