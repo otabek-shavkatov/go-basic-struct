@@ -125,6 +125,8 @@ func main() {
 	// barcha shapega tegishlilarni arealarni umumiysi
 	fmt.Println(TotalArea(shapes))
 
+	fmt.Println(LargestShape(shapes))
+
 }
 
 // Pointni qaytaradi structe yaratilganidan keyin unga mos obyekt yaratilishi kerak qiymatlarni qnadya qaytarish kerakligini belgilshga ishaltish uchun struct ni
@@ -385,4 +387,25 @@ func TotalArea(shapes []Shape) float64 {
 	}
 
 	return total
+}
+
+// LargestShape yani eng katta shakilni topish methodini yozamiz, buyerda asosiy narsa bor biz methodni biror structga asoslanib unga boglab yozamiz, xozir esa interfacega boglaymiz func yozib nima uchun degan savol boaldi javobi bitta strtuch bolsa unda boshqalrani korish uchun har biriga aloxdai method qilib keyin solishtirish kerak boalrdi
+
+// implement qilganlari hisoblanadi
+// interfaceda esa interfacega tushadaigan strclar olinadi bitta qilib method yoziladi tamom
+// Bu Polymorphism ning afzalligi - bitta funksiya ko'p
+// turdagi objectlar bilan ishlaydi yani struct bilan ham.
+
+func LargestShape(shapes []Shape) Shape {
+
+	largest := shapes[0]
+
+	for _, shape := range shapes {
+
+		if shape.Area() > largest.Area() {
+			largest = shape
+		}
+	}
+
+	return largest
 }
