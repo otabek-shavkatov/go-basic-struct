@@ -11,6 +11,13 @@ type Point struct {
 	y float64
 }
 
+// part 2 No 5
+type Triangle struct {
+	a Point
+	b Point
+	c Point
+}
+
 // interface ning vazifasi u oz ichiga methiodlarni olib turadi maslaan boshqa go fileda shaope ichiga olgan func larni shapoe orqali chaqirib ishlata olamiz
 // yani shapega ichidagi methodlar shape.Area() qilib ishaltsa boaldi shunday
 type Shape interface {
@@ -26,6 +33,34 @@ type Drawable interface {
 // Containable
 type Containable interface {
 	Contains(p Point) bool
+}
+
+// aylananing structi markaz va radius dan tashkil topgan qiymatlari
+type Circle struct {
+	center Point
+	radius float64
+}
+type Rectangle struct {
+	topLeft Point
+	height  float64
+	width   float64
+}
+
+type Color struct {
+	r uint8
+	b uint8
+	g uint8
+}
+
+// aylana bor edi uning rangli varaintini qyatirsh uchun
+type ColoredCircle struct {
+	Circle
+	color Color
+}
+
+type ColoredRectangle struct {
+	Rectangle
+	color Color
 }
 
 func main() {
@@ -75,6 +110,8 @@ func main() {
 		c: NewPoint(0, 4),
 	}
 
+	fmt.Println("Uchburchak yuzasi", triangle.Area())
+
 	fmt.Println("Perimeter:", triangle.Perimeter())
 	fmt.Println("Is valid:", triangle.IsValid())
 
@@ -121,12 +158,6 @@ func (p Point) DistanceTo(other Point) float64 {
 }
 
 //task 2
-
-// aylananing structi markaz va radius dan tashkil topgan qiymatlari
-type Circle struct {
-	center Point
-	radius float64
-}
 
 // constructr centerga Pointni radiusga float64 son qaytardi
 func CircleNew(center Point, radius float64) Circle {
@@ -188,12 +219,6 @@ func (c *Circle) Scale(factor float64) error {
 
 //task 3
 
-type Rectangle struct {
-	topLeft Point
-	height  float64
-	width   float64
-}
-
 func ConstructrRectangle(topLeft Point, width, height float64) (Rectangle, error) {
 	if width <= 0 || height <= 0 {
 		return Rectangle{}, errors.New("width and height ")
@@ -245,23 +270,6 @@ func (r *Rectangle) Scale(factor float64) error {
 
 // part 2 started No 4
 
-type Color struct {
-	r uint8
-	b uint8
-	g uint8
-}
-
-// aylana bor edi uning rangli varaintini qyatirsh uchun
-type ColoredCircle struct {
-	Circle
-	color Color
-}
-
-type ColoredRectangle struct {
-	Rectangle
-	color Color
-}
-
 // rgb qaytaradi
 
 func (c Color) ColorHex() string {
@@ -270,13 +278,6 @@ func (c Color) ColorHex() string {
 
 // Point orqali nuqtalarni topib olamiz
 
-// part 2 No 5
-type Triangle struct {
-	a Point
-	b Point
-	c Point
-}
-
 // a dan b gacha b dan c gacha va a dan c gacha masofalar topilib perimetrlari hisoblandi
 func (t Triangle) Perimeter() float64 {
 	ab := t.a.DistanceTo(t.b)
@@ -284,6 +285,18 @@ func (t Triangle) Perimeter() float64 {
 	ac := t.a.DistanceTo(t.c)
 
 	return ab + bc + ac
+}
+
+// uchburchakning yuzasini hiosblash uchun method har bir nuqtaning orasdiagi masofalarni topamiz DistanceTo orqali
+func (t Triangle) Area() float64 {
+
+	a := t.a.DistanceTo(t.b)
+	b := t.b.DistanceTo(t.c)
+	c := t.a.DistanceTo(t.c)
+
+	s := (a + b + c) / 2
+
+	return math.Sqrt(s * (s - a) * (s - b) * (s - c))
 }
 
 // bir burchakga yopshgan ikk tomon yigindisi burchak qarshisidagi tomondan katta bolsa shart qanoatlantiriladi
