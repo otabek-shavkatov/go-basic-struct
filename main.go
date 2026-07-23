@@ -115,6 +115,16 @@ func main() {
 	fmt.Println("Perimeter:", triangle.Perimeter())
 	fmt.Println("Is valid:", triangle.IsValid())
 
+	rect, _ := ConstructrRectangle(NewPoint(0, 0), 4, 6)
+
+	shapes := []Shape{
+		circle,
+		rect,
+		triangle,
+	}
+	// barcha shapega tegishlilarni arealarni umumiysi
+	fmt.Println(TotalArea(shapes))
+
 }
 
 // Pointni qaytaradi structe yaratilganidan keyin unga mos obyekt yaratilishi kerak qiymatlarni qnadya qaytarish kerakligini belgilshga ishaltish uchun struct ni
@@ -363,4 +373,16 @@ func FitInside(outer Containable, points []Point) []Point {
 		}
 	}
 	return result
+}
+
+// shape interface ga tegishli barcha arelarni umumiysini hisoblash uchun, total degan ozgaruvchi yartamiz 0 ga tenglab olamiz va shape Arealrni bir ma bir otamiz, manashu joyda Poliymorism ishlaydi biz birgina shape.Area qilish orqali olayapmiz
+func TotalArea(shapes []Shape) float64 {
+
+	total := 0.0
+
+	for _, shape := range shapes {
+		total += shape.Area()
+	}
+
+	return total
 }
