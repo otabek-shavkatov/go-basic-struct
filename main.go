@@ -23,6 +23,11 @@ type Drawable interface {
 	Draw() string
 }
 
+// Containable
+type Containable interface {
+	Contains(p Point) bool
+}
+
 func main() {
 
 	firstPoint := NewPoint(0, 0)
@@ -99,6 +104,10 @@ func (p Point) Y() float64 {
 	return p.y
 }
 
+func (p Point) String() string {
+	return fmt.Sprintf("(%.1f, %.1f)", p.x, p.y)
+}
+
 //constructr nimaga nima tegishliligi
 
 func (p Point) DistanceTo(other Point) float64 {
@@ -147,6 +156,11 @@ func (c Circle) Area() float64 {
 func (c Circle) Perimeter() float64 {
 	perimetr := 2 * math.Pi * c.radius
 	return perimetr
+}
+
+// stringda qaytaradi qiymatni
+func (c Circle) String() string {
+	return fmt.Sprintf("Circle radius=%.2f", c.radius)
 }
 
 // nuqta aylanma ichidami yoki yoqmi tekshirish buyerda nima uchun DistanceTo buni hiosblaymiz Point bu hisoblay oladi yani markz va nuqatagacha masofani agar radiusdan kicih bolsa demak u ichkarida
@@ -209,6 +223,10 @@ func (r Rectangle) Contains(p Point) bool {
 		p.y <= r.topLeft.y+r.height
 }
 
+// string qaytarish uchun
+func (r Rectangle) String() string {
+	return fmt.Sprintf("Rectangle %.1fx%.1f", r.width, r.height)
+}
 func (r Rectangle) Diagonal() float64 {
 	return math.Sqrt(r.width*r.width + r.height*r.height)
 }
@@ -303,3 +321,15 @@ func Render(shapes []Drawable) {
 // masalan men shape.Draw() deb ishaltyapaman buning tagida Draw ishlatilgan methodlar ... chiqadi, yani if bu bormi bu bormi deb soramaymiz borlarini go ozi bilib qaytaradi
 
 // part 4 No 10 started -----
+
+// outer Containable bu qasyi biri bolsa ham olaver degani Circle yoki Rectancle
+func FitInside(outer Containable, points []Point) []Point {
+	var result []Point
+
+	for _, p := range points {
+		if outer.Contains(p) {
+			result = append(result, p)
+		}
+	}
+	return result
+}
