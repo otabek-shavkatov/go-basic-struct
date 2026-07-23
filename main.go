@@ -297,3 +297,9 @@ func Render(shapes []Drawable) {
 		fmt.Println(shape.Draw())
 	}
 }
+
+// Polymorphism - bu bitta qilib aytganda yuza qisimda qulay bolgan xolda bitta narsa bilan ishalsh
+
+// masalan men shape.Draw() deb ishaltyapaman buning tagida Draw ishlatilgan methodlar ... chiqadi, yani if bu bormi bu bormi deb soramaymiz borlarini go ozi bilib qaytaradi
+
+// part 4 No 10 started
