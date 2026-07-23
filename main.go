@@ -111,7 +111,7 @@ func main() {
 	}
 
 	fmt.Println("Uchburchak yuzasi", triangle.Area())
-
+	fmt.Println("Uchburchak turlari:", triangle.Type())
 	fmt.Println("Perimeter:", triangle.Perimeter())
 	fmt.Println("Is valid:", triangle.IsValid())
 
@@ -308,6 +308,24 @@ func (t Triangle) IsValid() bool {
 	return ab+bc > ac &&
 		ab+ac > bc &&
 		ac+bc > ab
+}
+
+// uchburchakning turini aniqlash uchun method
+func (t Triangle) Type() string {
+
+	a := t.a.DistanceTo(t.b)
+	b := t.b.DistanceTo(t.c)
+	c := t.a.DistanceTo(t.c)
+
+	if a == b && b == c {
+		return "teng yonli uchburchak, yani 90 gradus boladi bir ichki burchagi"
+	}
+
+	if a == b || b == c || a == c {
+		return "teng tomonli yani ichki burchaklari 60 gradusdan boladi"
+	}
+
+	return "har hil tomonli uchburchak"
 }
 
 // buyterda Move bolayotgani uchun mos kordinatalari qoshiladi va asl qiymatni ozgarititishimzi mumkin bolishini taminlash uchun * ishlatamiz
