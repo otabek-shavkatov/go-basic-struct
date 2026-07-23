@@ -133,6 +133,35 @@ func main() {
 
 	Describe(triangle)
 
+	sorted := SortByArea(shapes)
+
+	// yigilgan arrayni forda bittalab ayalntirib korsatamiz
+	for _, s := range sorted {
+		fmt.Println("s", s.Area())
+	}
+
+	points := []Point{
+		NewPoint(1, 1),
+		NewPoint(4, 4),
+		NewPoint(8, 8),
+	}
+	CirclePrint := FitInside(circle, points)
+
+	fmt.Println(CirclePrint)
+
+	colored := ColoredCircle{
+		Circle: circle,
+		color: Color{
+			r: 255,
+			g: 100,
+			b: 50,
+		},
+	}
+
+	fmt.Println(colored.color.ColorHex())
+	fmt.Println(colored.Area())
+	fmt.Println(colored.Perimeter())
+
 }
 
 // Pointni qaytaradi structe yaratilganidan keyin unga mos obyekt yaratilishi kerak qiymatlarni qnadya qaytarish kerakligini belgilshga ishaltish uchun struct ni
@@ -416,7 +445,7 @@ func LargestShape(shapes []Shape) Shape {
 	return largest
 }
 
-// / Describe qaysi biri qnadya struct ekanligni aniqlaymiz yani shape ichida nimalr bior ozi oshalarni bilish uchun switch dan foydalanamiz
+// / Describe qaysi biri qnadya struct ekanligni aniqlaymiz yani shape ichida nimalr bor ozi oshalarni bilish uchun switch dan foydalanamiz
 func Describe(shape Shape) {
 	switch s := shape.(type) {
 	case Circle:
@@ -429,4 +458,36 @@ func Describe(shape Shape) {
 		fmt.Println("tortburchakning eni", s.width)
 
 	}
+}
+
+// SortByArea
+
+func SortByArea(shapes []Shape) []Shape {
+
+	// Tashqi for:
+	// Har bir aylanishda bitta joyni (indexni) to'g'ri element bilan to'ldiradi. Yani ikkta fordan maqsad har bir element uchun qolgan har bir elemerntni solishtirish maslan bizda 2,3,4 sonalri bolsa 2 ni olib osha uchun 3 va 4 ni solihtiramiz 3ga navbat kelganida 2 va 4 ni solihtiramiz bitta forda 2,3,4 larni olamiz va ikkinchi forda esa osha olganimizga qolganalrini olib solihtirmiz
+	for i := 0; i < len(shapes)-1; i++ {
+
+		// Hozircha eng kichik element shu indexda deb hisoblaymiz.
+		minimumShape := i
+
+		// Ichki for:
+		// i dan keyingi barcha Shape larni tekshiradi.
+		// Maqsad kicik Area() ga ega Shape ni topish.
+		for j := i + 1; j < len(shapes); j++ {
+
+			// Agar yangi topilgan Shape ning Area() si
+			// oldingi minimumdan kichik bo'lsa,
+			// minimum indexini yangilaymiz.
+			if shapes[j].Area() < shapes[minimumShape].Area() {
+				minimumShape = j
+			}
+		}
+
+		// Eng kichik Shape ni xozirgi oringa olib kelamiz yani for topgan shapeni olib kelamiz togri joylashtirmaiz
+		shapes[i], shapes[minimumShape] = shapes[minimumShape], shapes[i]
+	}
+
+	// Saralangan Shape larni qaytaramiz.
+	return shapes
 }
