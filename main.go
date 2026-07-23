@@ -302,4 +302,4 @@ func Render(shapes []Drawable) {
 
 // masalan men shape.Draw() deb ishaltyapaman buning tagida Draw ishlatilgan methodlar ... chiqadi, yani if bu bormi bu bormi deb soramaymiz borlarini go ozi bilib qaytaradi
 
-// part 4 No 10 started
+// part 4 No 10 started -----
